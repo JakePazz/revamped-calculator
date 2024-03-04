@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Madimi+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/44f0ee3e09.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
     <title>Calculator</title>
+
 </head>
 <body>
     <main>
@@ -12,26 +17,28 @@
             <div id="calculator-screen">
                 <p id="screen-display">0</p>
             </div>
-            <button class="calculator-button operator" id="left-bracket">(</button>
-            <button class="calculator-button operator" id="right-bracket">)</button>
-            <button class="calculator-button operator" id="clear">AC</button>
-            <button class="calculator-button operator" id="backspace">/-</button>
-            <button class="calculator-button number" id="seven">7</button>
-            <button class="calculator-button number" id="eight">8</button>
-            <button class="calculator-button number" id="nine">9</button>
-            <button class="calculator-button operator" id="divide">÷</button>
-            <button class="calculator-button number" id="four">4</button>
-            <button class="calculator-button number" id="five">5</button>
-            <button class="calculator-button number" id="six">6</button>
-            <button class="calculator-button operator" id="multiply">*</button>
-            <button class="calculator-button number" id="one">1</button>
-            <button class="calculator-button number" id="two">2</button>
-            <button class="calculator-button number" id="three">3</button>
-            <button class="calculator-button operator" id="subtract">-</button>
-            <button class="calculator-button number" id="zero">0</button>
-            <button class="calculator-button operator" id="dot">.</button>
-            <button class="calculator-button operator" id="equals">=</button>
-            <button class="calculator-button operator" id="plus">+</button>
+            <div id="buttons-container">
+                <button class="calculator-button operator" id="left-bracket">(</button>
+                <button class="calculator-button operator" id="right-bracket">)</button>
+                <button class="calculator-button operator" id="clear">AC</button>
+                <button class="calculator-button operator" id="backspace"><i class="fa-solid fa-delete-left"></i></button>
+                <button class="calculator-button number" id="seven">7</button>
+                <button class="calculator-button number" id="eight">8</button>
+                <button class="calculator-button number" id="nine">9</button>
+                <button class="calculator-button operator" id="divide"><i class="fa-solid fa-divide"></i></button>
+                <button class="calculator-button number" id="four">4</button>
+                <button class="calculator-button number" id="five">5</button>
+                <button class="calculator-button number" id="six">6</button>
+                <button class="calculator-button operator" id="multiply"><i class="fa-solid fa-xmark"></i></button>
+                <button class="calculator-button number" id="one">1</button>
+                <button class="calculator-button number" id="two">2</button>
+                <button class="calculator-button number" id="three">3</button>
+                <button class="calculator-button operator" id="subtract"><i class="fa-solid fa-minus"></i></button>
+                <button class="calculator-button number" id="zero">0</button>
+                <button class="calculator-button number" id="dot">.</button>
+                <button class="calculator-button operator" id="equals"><i class="fa-solid fa-equals"></i></button>
+                <button class="calculator-button operator" id="plus"><i class="fa-solid fa-plus"></i></button></div>
+            </div>
         </div>
     </main>
 

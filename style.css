@@ -1,18 +1,136 @@
-body, html{
-    margin:0;
-    padding:0;
-    display:flex;
+:root {
+    --background-colour: #A3ACB1;
+    --red: #ED1C24;
+    --red-hover: #bf3034;
+    --light-red: #d05458;
+    --light-red-hover: #d1454a;
+    --blue: #223843;
+    --blue-hover: #2b4755;
+    --dark-blue: #172930;
+    --dark-blue-hover: #0c191e;
+    --grey: #56676F;
+    --grey-hover: #6b7e87;
+    --orange: #F1955C;
+    --white: #EFF1F3;
+    --turquoise: #1D7874;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+
+    height: 100vh;
+    width: 100vw;
+
+    display: flex;
     justify-content: center;
+    align-items: center;
+
+    background-color: var(--white);
+
+    font-family: "Poppins", 'Segoe UI', sans-serif;
 }
 
 
-#calculator-container{
-    background-color: black;
-    width:30rem;
-    height:40rem;
+#calculator-container {
+    background-color: var(--background-colour);
+
+    width: 32rem;
+    height: 42rem;
+
+    padding: 2rem;
+
+    border-radius: 25px;
 }
 
 #calculator-screen{
-    background-color: red;
-    width:95%;
+    background-color: var(--turquoise);
+
+    width: calc(100% - 1rem);
+    height: 10%;
+
+    display: flex;
+    align-items: center;
+    justify-content: start;
+
+    padding-left: 1rem;
+    margin-bottom: 1rem;
+
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--white);
+    overflow-y: hidden; /* Any overflow characters will be hidden - not ideal, needs better solution*/
+    border-radius: 20px;
+}
+
+.calculator-button {
+    width: 100%;
+    height: 100%;
+
+    border-radius: 25px;
+    border-style: none;
+
+    font-size: 2rem;
+    color: var(--white);
+
+}
+
+.calculator-button:hover {
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.number:hover {
+    background-color: var(--blue);
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+#buttons-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    height: calc(90% - 1rem);
+    grid-gap: 3px;
+}
+
+
+.operator {
+    background-color: var(--grey);
+}
+
+.operator:hover {
+    background-color: var(--grey-hover);
+}
+
+.number {
+    background-color: var(--blue);
+}
+
+.number:hover {
+    background-color: var(--blue-hover);
+}
+
+#backspace {
+    background-color: var(--red);
+}
+
+#backspace:hover {
+    background-color: var(--red-hover);
+}
+
+#equals {
+    background-color: var(--dark-blue);
+}
+
+#equals:hover {
+    background-color: var(--dark-blue-hover);
+}
+
+#clear {
+    background-color: var(--light-red);
+}
+
+#clear:hover {
+    background-color: var(--light-red-hover);
 }
