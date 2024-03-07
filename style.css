@@ -134,3 +134,8 @@ body, html {
 #clear:hover {
     background-color: var(--light-red-hover);
 }
+
+
+.icon {
+    display: none;
+}

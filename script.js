@@ -2,12 +2,14 @@ class Calculator{
     constructor(){
         this.screenDisplay = document.getElementById('screen-display');
         const calculatorButtons = document.getElementsByClassName('calculator-button');
+        const iconButtons = document.getElementsByClassName('has-icon')
 
         for(const button of calculatorButtons){
             button.addEventListener('pointerdown', () =>{
                 this.handleUserInput(button.textContent);
             });
         }
+
     }
 
     handleUserInput(input){
@@ -50,7 +52,7 @@ class Calculator{
     calculateExpression(expression){
         const operators = ['*', '/', '+', '-'];
         const nums = expression.split(new RegExp(`[${operators.join('')}]`));
-        const operatorsArray = expression.split('').filter(char => operators.includes(char));
+        const operatorsArray = expression.split('').filter(chaar => operators.includes(char));
         const answer = []
         console.log(nums);
         console.log(operatorsArray);
@@ -72,16 +74,16 @@ class Calculator{
                 const lastNum = parseFloat(currentNum);
                 switch (lastExp.operator){
                     case '*':
-                        currentNume = (parseFloat(lastExp.value) * lastNum).toString();
+                        currentNum = (parseFloat(lastExp.value) * lastNum).toString();
                         break;
                     case '/':
-                        currentNume = (parseFloat(lastExp.value) / lastNum).toString();
+                        currentNum = (parseFloat(lastExp.value) / lastNum).toString();
                         break;
                     case '+':
-                        currentNume = (parseFloat(lastExp.value) + lastNum).toString();
+                        currentNum = (parseFloat(lastExp.value) + lastNum).toString();
                         break;
                     case '-':
-                        currentNume = (parseFloat(lastExp.value) - lastNum).toString();
+                        currentNum = (parseFloat(lastExp.value) - lastNum).toString();
                         break;
                 }
                 pendingOp = '';
@@ -114,4 +116,6 @@ class Calculator{
 }
 
 const newCalculator = new Calculator();
+
+
 
