@@ -6,7 +6,15 @@ class Calculator{
 
         for(const button of calculatorButtons){
             button.addEventListener('pointerdown', () =>{
-                this.handleUserInput(button.textContent);
+
+                if(this.screenDisplay.textContent === 'Error'){
+                    this.screenDisplay.textContent = '';
+                    this.handleUserInput(button.textContent);
+                } else{
+                    this.handleUserInput(button.textContent);
+                }
+                
+            
             });
         }
 
@@ -20,8 +28,11 @@ class Calculator{
             case '=':
                 this.calculate();
                 break;
-            case 'O':
+
+            case "":
                 this.backspace();
+                break;
+                
             default:
                 this.appendInput(input);
                 break;
@@ -31,11 +42,10 @@ class Calculator{
 
     backspace(){
         this.screenDisplay.textContent = this.screenDisplay.textContent.slice(0, -1);
-        
     }
-    
+
     clearDisplay(){
-        this.screenDisplay.textContent = ' ';
+        this.screenDisplay.textContent = '';
     }
 
     appendInput(input){
@@ -44,75 +54,91 @@ class Calculator{
 
     calculate(){
         const expression = this.screenDisplay.textContent;
-        let result;
-        result = this.calculateExpression(expression);
-        this.screenDisplay.textContent = result;
+        // try{
+        //     this.screenDisplay.textContent = this.calculateExpression(expression);
+        // } catch (error){
+        //     this.screenDisplay.textContent = 'Error';
+        // }
+        this.screenDisplay.textContent = this.calculateExpression(expression);
     }
 
     calculateExpression(expression){
         const operators = ['*', '/', '+', '-'];
-        const nums = expression.split(new RegExp(`[${operators.join('')}]`));
-        const operatorsArray = expression.split('').filter(chaar => operators.includes(char));
-        const answer = []
-        console.log(nums);
-        console.log(operatorsArray);
+        let currentNumber = '';
+        const answer=[];
 
-        let currentNum = '';
-        let pendingOp = '';
+        for(let x=0; x<expression.length; x++){
+            const char=expression[x];
 
-        for(let x = 0; x < expression.length; x++){
-            const char = expression[x];
+            if(char==='('){
+                answer.push(currentNumber);
+                answer.push(char);
+                currentNumber = '';
+                answer.push('*');
+            } else if(char===')'){
+                answer.push(parseFloat(currentNumber));
+                currentNumber = '';
 
-            if (char === '('){
-                answer.push({operator: pendingOp, value: currentNum});
-                currentNum = '';
-                pendingOp = '';
-                console.log(answer);
-            }
-            else if (char === ')'){
-                const lastExp = answer.pop();
-                const lastNum = parseFloat(currentNum);
-                switch (lastExp.operator){
-                    case '*':
-                        currentNum = (parseFloat(lastExp.value) * lastNum).toString();
-                        break;
-                    case '/':
-                        currentNum = (parseFloat(lastExp.value) / lastNum).toString();
-                        break;
-                    case '+':
-                        currentNum = (parseFloat(lastExp.value) + lastNum).toString();
-                        break;
-                    case '-':
-                        currentNum = (parseFloat(lastExp.value) - lastNum).toString();
-                        break;
+                while(answer.length > 1 && answer[answer.length -2] !== '('){
+                    const number1 = answer.pop();
+                    const operator = answer.pop();
+                    const number2 = answer.pop();
+
+                    answer.push(this.performOperation(number1, operator, number2));
                 }
-                pendingOp = '';
-            }
-            else if (operators.includes(char)){
-                pendingOp = char;
-            }
-            else if (char === '.'){
-                currentNum += char;
-            }
-            else if (!isNaN(parseInt(char))){
-                currentNum += char;
-            }
 
-            if(currentNum !== ''){
-                if (pendingOp !== ''){
-                    throw new Error('Invalid expression');
+                if(answer[answer.length - 2] === '('){
+                    answer.pop();
                 }
-                return currentNum;
-            }
-            else{
-                throw new Error('Invalid expression');
+            } else if(operators.includes(char)){
+                if(currentNumber !== ''){
+                    answer.push(parseFloat(currentNumber));
+                    currentNumber='';
+                }
+                answer.push(char);
+            } else if (!isNaN(parseInt(char)) || char === '.'){
+                currentNumber += char;
+            } else{
+                throw new Error(`invalid char: ${char}`);
             }
         }
-        
+
+        if(currentNumber!==''){
+            answer.push(parseFloat(currentNumber));
+        }
+
+        for(let j=0; j<answer.length; j++){
+            if(!isNaN(answer[j]) && answer[j + 1] === '('){
+                answer.splice(j + 1, 0, '*');
+            }
+        }
+
+        while(answer.length>1){
+            const number1 = answer.pop();
+            const operator = answer.pop();
+            const number2 = answer.pop();
+            answer.push(this.performOperation(number1, operator, number2));
+        }
+        return answer[0].toString();
     }
 
-    
-    
+
+    performOperation(number1, operator, number2){
+        switch(operator){
+            case '+':
+                return number2 + number1;
+            case '-':
+                return number2 - number1;
+            case '*':
+                return number2 * number1;
+            case '/':
+                return number2 / number1;
+            default:
+                throw new Error(`Invalid operator: ${operator} Num1: ${number1} Num2: ${number2}`);
+        }
+    }
+
+
 }
 
 const newCalculator = new Calculator();
