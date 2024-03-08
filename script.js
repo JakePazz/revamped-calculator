@@ -28,14 +28,6 @@ class Calculator{
             this.handleThemeChange(themeChange);
         });
 
-        menuBtn.addEventListener('pointerdown', () => {
-            this.handleMenu()
-        });
-
-        themeSelector.addEventListener('click', themeChange => {
-            this.handleThemeChange(themeChange);
-        });
-
     }
 
     handleUserInput(input){
