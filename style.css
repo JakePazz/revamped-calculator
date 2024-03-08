@@ -1,18 +1,43 @@
-:root {
-    --background-colour: #A3ACB1;
-    --red: #ED1C24;
-    --red-hover: #bf3034;
-    --light-red: #d05458;
-    --light-red-hover: #d1454a;
-    --blue: #223843;
-    --blue-hover: #2b4755;
-    --dark-blue: #172930;
-    --dark-blue-hover: #0c191e;
-    --grey: #56676F;
-    --grey-hover: #6b7e87;
-    --orange: #F1955C;
-    --white: #EFF1F3;
-    --turquoise: #1D7874;
+.light-theme {
+    --background: #b9bec0;
+    --base: #A3ACB1;
+    --accent-base-colour: #9ea5a9;
+    --warn-high: #ED1C24;
+    --warn-high-hover: #bf3034;
+    --warn-low: #d05458;
+    --warn-low-hover: #d1454a;
+    --number: #223843;
+    --number-hover: #2b4755;
+    --imp: #172930;
+    --imp-hover: #0c191e;
+    --operator: #56676F;
+    --operator-hover: #6b7e87;
+    --font: #EFF1F3;
+    --screen: #1D7874;
+    --shadow: 0.2rem 0.2rem 3rem grey;
+
+    transition: ease-in 0.5s;
+}
+
+.purplish-theme {
+    --background: #303435;
+    --base: #6a656b;
+    --accent-base-colour: #787379;
+    --warn-high: #773AC6;
+    --warn-high-hover: #7234c3;
+    --warn-low: #7e52b6;
+    --warn-low-hover: #7948ba;
+    --number: #543e61;
+    --number-hover: #4d3759;
+    --imp: #3c0f47;
+    --imp-hover: #2f0c38;
+    --operator: #3d2545;
+    --operator-hover: #361f3d;
+    --font: #EFF1F3;
+    --screen: #76537f;
+    --shadow: 0.2rem 0.2rem 3rem rgb(22, 16, 16);
+
+    transition: ease-in 0.5s;
 }
 
 body, html {
@@ -26,25 +51,111 @@ body, html {
     justify-content: center;
     align-items: center;
 
-    background-color: var(--white);
+    background-color: var(--background);
 
     font-family: "Poppins", 'Segoe UI', sans-serif;
+    /* cursor: url('./assets/images/main-cursor.png'), auto; */
+}
+
+#menu {
+    background-color: var(--accent-base-colour);
+    width: fit-content;
+    z-index: 1;
+    border-radius: 0 25px 25px 0;
+    box-shadow: var(--shadow);
+    transition: transform 0.8s ease-out;
+    transform: translateX(-90%);
+    display: flex;
+    align-items: center;
+
+}
+
+#menu-content {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+#menu.menu-visible  {
+    transform: translateX(0);
+}
+
+.menu-btn-close {
+    font-size: 3rem;
+    margin-left: 0.5rem;
+    color: var(--imp);
+    transition: transform 0.8s ease-out;
+    transform: rotate(180deg);
 }
 
 
-#calculator-container {
-    background-color: var(--background-colour);
+#menu-btn:not(.menu-btn-close) {
+    font-size: 3rem;
+    margin-left: 0.5rem;
+    color: var(--imp);
+    transition: transform 0.8s ease-out;
+    transform: rotate(0deg);
 
-    width: 32rem;
-    height: 42rem;
+}
+
+#menu-btn:hover {
+    /* cursor: url('./assets/images/hover-cursor.png'), pointer; */
+    cursor: pointer;
+}
+
+#select-theme-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    align-items: center;
+}
+
+#theme-selector {
+    border-radius: 5px;
+    background-color: var(--screen);
+    color: var(--font);
+    font-family: "Poppins", 'Segoe UI', sans-serif;
+    font-weight: bold;
+    letter-spacing: 0.1rem;
+}
+
+#menu input[type="checkbox"] {
+    appearance: none;
+    width: 2rem;
+    height: 2rem;
+    background-color: white;
+    border: 2px solid #555;
+    border-radius: 50%;
+    outline: none;
+}
+
+#menu input[type="checkbox"]:checked {
+    background-color: var(--imp);
+}
+
+#credits-list, a {
+    color: inherit;
+    text-decoration: none;
+}
+
+#calculator-container {
+    background-color: var(--base);
+
+    width: clamp(18rem, 32rem, 40vw);
+    height: clamp(28rem, 42rem, 80vw);
 
     padding: 2rem;
 
     border-radius: 25px;
+
+    box-shadow: var(--shadow);
+
+    z-index: 2;
+
 }
 
 #calculator-screen{
-    background-color: var(--turquoise);
+    background-color: var(--screen);
 
     width: calc(100% - 1rem);
     height: 10%;
@@ -58,7 +169,7 @@ body, html {
 
     font-size: 3rem;
     font-weight: bold;
-    color: var(--white);
+    color: var(--font);
     overflow-y: hidden; /* Any overflow characters will be hidden - not ideal, needs better solution*/
     border-radius: 20px;
 }
@@ -71,18 +182,21 @@ body, html {
     border-style: none;
 
     font-size: 2rem;
-    color: var(--white);
+    color: var(--font);
+    transition: font-size 0.2s;
 
 }
 
 .calculator-button:hover {
     transition: all 0.3s;
+    /* cursor: url('./assets/images/hover-cursor.png'), pointer; */
     cursor: pointer;
 }
 
 .number:hover {
-    background-color: var(--blue);
+    background-color: var(--number);
     transition: all 0.3s;
+    /* cursor: url('./assets/images/hover-cursor.png'), pointer; */
     cursor: pointer;
 }
 
@@ -94,47 +208,49 @@ body, html {
     grid-gap: 3px;
 }
 
+.calculator-button:hover {
+    font-size: 2.4rem;
+}
 
 .operator {
-    background-color: var(--grey);
+    background-color: var(--operator);
 }
 
 .operator:hover {
-    background-color: var(--grey-hover);
+    background-color: var(--operator-hover);
 }
 
 .number {
-    background-color: var(--blue);
+    background-color: var(--number);
 }
 
 .number:hover {
-    background-color: var(--blue-hover);
+    background-color: var(--number-hover);
 }
 
 #backspace {
-    background-color: var(--red);
+    background-color: var(--warn-high);
 }
 
 #backspace:hover {
-    background-color: var(--red-hover);
+    background-color: var(--warn-high-hover);
 }
 
 #equals {
-    background-color: var(--dark-blue);
+    background-color: var(--imp);
 }
 
 #equals:hover {
-    background-color: var(--dark-blue-hover);
+    background-color: var(--imp-hover);
 }
 
 #clear {
-    background-color: var(--light-red);
+    background-color: var(--warn-low);
 }
 
 #clear:hover {
-    background-color: var(--light-red-hover);
+    background-color: var(--warn-low-hover);
 }
-
 
 .icon {
     display: none;

@@ -12,7 +12,7 @@
     <title>Calculator</title>
 </head>
 
-<body>
+<body id="body" class="purplish-theme">
     <div id="calculator-container">
         <div id="calculator-screen">
             <p id="screen-display">0</p>
@@ -37,8 +37,33 @@
             <button class="calculator-button number" id="zero">0</button>
             <button class="calculator-button number" id="dot">.</button>
             <button class="calculator-button operator" id="equals"><span class="icon">=</span><i class="fa-solid fa-equals"></i></button>
-            <button class="calculator-button operator" id="plus"><span class="icon">+</span><i class="fa-solid fa-plus"></i></button></div>
+            <button class="calculator-button operator" id="plus"><span class="icon">+</span><i class="fa-solid fa-plus"></i></button>
         </div>
+    </div>
+    <div id="menu" class="">
+        <div id="menu-content">
+            <h3>Menu</h3>
+            <div id="select-theme-container">
+                <p>Theme</p>
+                <select id="theme-selector">
+                    <option value="light-theme">Quite Light</option>
+                    <option value="purplish-theme">Purplish</option>
+                </select>
+            </div>
+            <div id="credits-container">
+                <p>Who made this?</p>
+                <ul id="credits-list">
+                    <li>CSS <i class="fa-solid fa-right-long"></i> <a href="https://github.com/JakePazz" target="_blank"><strong>Jake Pazzard <i class="fa-solid fa-up-right-from-square"></i></strong></a></li>
+                    <li>JS <i class="fa-solid fa-right-long"></i> <a href="https://github.com/Nydonidd" target="_blank"><strong>Dimo Rosenov <i class="fa-solid fa-up-right-from-square"></i></strong></a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="toggle-btn-container">
+            <i role="button" name="open menu" id="menu-btn" class="fa-solid fa-angle-right"></i>
+        </div>
+    </div>
+
+    
     <script src="script.js"></script>
 </body>
 

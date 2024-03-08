@@ -2,7 +2,9 @@ class Calculator{
     constructor(){
         this.screenDisplay = document.getElementById('screen-display');
         const calculatorButtons = document.getElementsByClassName('calculator-button');
-        const iconButtons = document.getElementsByClassName('has-icon')
+        const menuBtn = document.getElementById('menu-btn');
+        const themeSelector = document.getElementById('theme-selector');
+        
 
         for(const button of calculatorButtons){
             button.addEventListener('pointerdown', () =>{
@@ -17,6 +19,22 @@ class Calculator{
             
             });
         }
+
+        menuBtn.addEventListener('pointerdown', () => {
+            this.handleMenu()
+        });
+
+        themeSelector.addEventListener('click', themeChange => {
+            this.handleThemeChange(themeChange);
+        });
+
+        menuBtn.addEventListener('pointerdown', () => {
+            this.handleMenu()
+        });
+
+        themeSelector.addEventListener('click', themeChange => {
+            this.handleThemeChange(themeChange);
+        });
 
     }
 
@@ -38,7 +56,6 @@ class Calculator{
                 break;
         }
     }
-
 
     backspace(){
         this.screenDisplay.textContent = this.screenDisplay.textContent.slice(0, -1);
@@ -64,81 +81,88 @@ class Calculator{
 
     calculateExpression(expression){
         const operators = ['*', '/', '+', '-'];
-        let currentNumber = '';
-        const answer=[];
+        const nums = expression.split(new RegExp(`[${operators.join('')}]`));
+        const operatorsArray = expression.split('').filter(chaar => operators.includes(char));
+        const answer = []
+        console.log(nums);
+        console.log(operatorsArray);
 
-        for(let x=0; x<expression.length; x++){
-            const char=expression[x];
+        let currentNum = '';
+        let pendingOp = '';
 
-            if(char==='('){
-                answer.push(currentNumber);
-                answer.push(char);
-                currentNumber = '';
-                answer.push('*');
-            } else if(char===')'){
-                answer.push(parseFloat(currentNumber));
-                currentNumber = '';
+        for(let x = 0; x < expression.length; x++){
+            const char = expression[x];
 
-                while(answer.length > 1 && answer[answer.length -2] !== '('){
-                    const number1 = answer.pop();
-                    const operator = answer.pop();
-                    const number2 = answer.pop();
-
-                    answer.push(this.performOperation(number1, operator, number2));
+            if (char === '('){
+                answer.push({operator: pendingOp, value: currentNum});
+                currentNum = '';
+                pendingOp = '';
+                console.log(answer);
+            }
+            else if (char === ')'){
+                const lastExp = answer.pop();
+                const lastNum = parseFloat(currentNum);
+                switch (lastExp.operator){
+                    case '*':
+                        currentNum = (parseFloat(lastExp.value) * lastNum).toString();
+                        break;
+                    case '/':
+                        currentNum = (parseFloat(lastExp.value) / lastNum).toString();
+                        break;
+                    case '+':
+                        currentNum = (parseFloat(lastExp.value) + lastNum).toString();
+                        break;
+                    case '-':
+                        currentNum = (parseFloat(lastExp.value) - lastNum).toString();
+                        break;
                 }
+                pendingOp = '';
+            }
+            else if (operators.includes(char)){
+                pendingOp = char;
+            }
+            else if (char === '.'){
+                currentNum += char;
+            }
+            else if (!isNaN(parseInt(char))){
+                currentNum += char;
+            }
 
-                if(answer[answer.length - 2] === '('){
-                    answer.pop();
+            if(currentNum !== ''){
+                if (pendingOp !== ''){
+                    throw new Error('Invalid expression');
                 }
-            } else if(operators.includes(char)){
-                if(currentNumber !== ''){
-                    answer.push(parseFloat(currentNumber));
-                    currentNumber='';
-                }
-                answer.push(char);
-            } else if (!isNaN(parseInt(char)) || char === '.'){
-                currentNumber += char;
-            } else{
-                throw new Error(`invalid char: ${char}`);
+                return currentNum;
+            }
+            else{
+                throw new Error('Invalid expression');
             }
         }
-
-        if(currentNumber!==''){
-            answer.push(parseFloat(currentNumber));
-        }
-
-        for(let j=0; j<answer.length; j++){
-            if(!isNaN(answer[j]) && answer[j + 1] === '('){
-                answer.splice(j + 1, 0, '*');
-            }
-        }
-
-        while(answer.length>1){
-            const number1 = answer.pop();
-            const operator = answer.pop();
-            const number2 = answer.pop();
-            answer.push(this.performOperation(number1, operator, number2));
-        }
-        return answer[0].toString();
+        
     }
 
+    handleMenu(){
+        console.log("Menu Clicked");
+        document.getElementById('menu').classList.toggle('menu-visible');
 
-    performOperation(number1, operator, number2){
-        switch(operator){
-            case '+':
-                return number2 + number1;
-            case '-':
-                return number2 - number1;
-            case '*':
-                return number2 * number1;
-            case '/':
-                return number2 / number1;
-            default:
-                throw new Error(`Invalid operator: ${operator} Num1: ${number1} Num2: ${number2}`);
-        }
+        // if (document.getElementById('menu-btn').classList.contains('menu-btn-close')) {
+        //     document.getElementById('menu-btn').classList.replace('menu-btn-close', 'menu-btn-open');
+        // } else {
+        //     document.getElementById('menu-btn').classList.replace('menu-btn-open','menu-btn-close');
+        // }
+        document.getElementById('menu-btn').classList.toggle('menu-btn-close');
+        
     }
 
-
+    handleThemeChange(themeChange){
+        if (themeChange.target.value === document.body.classList) {
+            console.log(`Theme Already ${themeChange.target.value}`);
+        } else {
+            console.log(`Theme Changed to ${themeChange.target.value}`);
+            document.body.classList = `${themeChange.target.value}`;
+        }
+    }
+    
 }
 
 const newCalculator = new Calculator();
